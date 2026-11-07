@@ -2,7 +2,7 @@ use serde::Serialize;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use sysinfo::Networks;
-use tauri::{AppHandle, Emitter, Manager, Window};
+use tauri::{Emitter, Manager, Window};
 
 #[derive(Serialize, Clone)]
 struct NetworkPayload {
@@ -33,12 +33,10 @@ fn close_window(window: Window) {
 
 #[tauri::command]
 fn set_window_height(window: Window, height: f64) {
-    if let Ok(size) = window.outer_size() {
-        let _ = window.set_size(tauri::Size::Logical(tauri::LogicalSize {
-            width: 385.0,
-            height: height.max(240.0).min(950.0),
-        }));
-    }
+    let _ = window.set_size(tauri::Size::Logical(tauri::LogicalSize {
+        width: 385.0,
+        height: height.max(240.0).min(950.0),
+    }));
 }
 
 #[tauri::command]
@@ -84,13 +82,14 @@ pub fn run() {
             send_to_desktop
         ])
         .setup(move |app| {
-            let main_window = app.get_webview_window("main").unwrap();
-            pin_to_desktop(&main_window);
+            if let Some(main_window) = app.get_webview_window("main") {
+                pin_to_desktop(&main_window.as_ref().window());
+            }
 
             let app_handle = app.handle().clone();
             let net_ref = Arc::clone(&networks);
 
-            // Background network monitor thread: uses < 0.1% CPU
+            // Low-overhead network monitor thread
             std::thread::spawn(move || loop {
                 std::thread::sleep(Duration::from_millis(1000));
 

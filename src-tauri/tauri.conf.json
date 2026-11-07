@@ -12,6 +12,7 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Only Widget",
         "width": 385,
         "height": 535,
