@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg-widget: transparent;
+  
+  --bg-card: #151b2b;
+  --bg-card-hover: #1b2337;
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-light: rgba(255, 255, 255, 0.20);
+  
+  --cyan-glow: #06b6d4;
+  --cyan-solid: #0d273a;
+  --violet-glow: #a855f7;
+  --violet-solid: #23163a;
+  --emerald-glow: #10b981;
+  --emerald-solid: #0e2a22;
+  
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+  --text-dim: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-main);
+  background: transparent;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.mono-font {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Electron Draggable Regions */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Widget Container - Fully transparent background */
+.widget-glass-container {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Solid, Opaque Floating Cards - Never allow flexbox to shrink cards */
+.widget-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.widget-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glass-light);
+}
+
+/* Buttons and Controls */
+.icon-btn {
+  background: #192033;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: #232c44;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.icon-btn.active {
+  background: var(--cyan-solid);
+  color: var(--cyan-glow);
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+/* Network Speed Indicators - Solid tinted pills */
+.net-pill {
+  padding: 8px 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+}
+
+.net-down {
+  background: var(--cyan-solid);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.net-up {
+  background: var(--violet-solid);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Custom Scrollbar for Timezone List */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Animations */
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.pulsing-dot {
+  animation: pulseDot 2s infinite ease-in-out;
+}
