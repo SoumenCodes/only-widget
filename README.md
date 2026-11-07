@@ -66,3 +66,4 @@ npm run dist:mac   # Build macOS .dmg
 
 ## 📄 License
 MIT
+"# only-widget" 
