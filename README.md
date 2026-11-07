@@ -1,27 +1,27 @@
 # Only Widget
 
 > **The only desktop widget you need.**  
-> Ultra-lightweight desktop widget displaying real-time network speed (Mbps/Kbps), 12-hour clock, and world time zones. Built with **Tauri 2.0** (~5–8 MB download, ~25 MB RAM).
+> Ultra-lightweight desktop widget displaying real-time network speed (Mbps/Kbps), 12-hour clock, and world time zones. Built with **Tauri 2.0** (~2–3 MB download, ~25 MB RAM).
 
 ---
 
 ## ⚡ Instant Download
 
-Click below to download the lightweight installer for your computer:
+Click below to download directly for your computer:
 
-| Platform | Download Link | Size | File Type |
+| Platform | Download Link | File Size | Description |
 | :--- | :--- | :--- | :--- |
-| **Windows** | [⬇️ **Download for Windows**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~5 MB** | `.msi` / `.exe` |
-| **macOS (Apple Silicon M1/M2/M3/M4)** | [⬇️ **Download for Mac (Apple Silicon)**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~6 MB** | `.dmg` |
-| **macOS (Intel Core)** | [⬇️ **Download for Mac (Intel)**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~6 MB** | `.dmg` |
+| **Windows (.exe)** | [⬇️ **Download Windows EXE**](https://github.com/SoumenCodes/only-widget/releases/download/v1.1.1/Only.Widget_1.0.0_x64-setup.exe) | **1.97 MB** ⚡ | Standard setup installer |
+| **Windows (.msi)** | [⬇️ **Download Windows MSI**](https://github.com/SoumenCodes/only-widget/releases/download/v1.1.1/Only.Widget_1.0.0_x64_en-US.msi) | **2.96 MB** ⚡ | Windows Installer package |
+| **macOS (Apple Silicon)** | [⬇️ **Download macOS DMG**](https://github.com/SoumenCodes/only-widget/releases/download/v1.1.1/Only.Widget_1.0.0_aarch64.dmg) | **3.31 MB** ⚡ | Mac disk image (M1/M2/M3/M4) |
 
-*(Browse all assets and versions directly on the [Releases](https://github.com/SoumenCodes/only-widget/releases) page).*
+*(Or visit the [Release Page](https://github.com/SoumenCodes/only-widget/releases/tag/v1.1.1) to view all download options).*
 
 ---
 
 ## ✨ Features
 
-- **Ultralight Footprint**: **~5 MB download** and **~25 MB RAM** (vs 120 MB in standard apps).
+- **Ultralight**: Only **~2 MB download** and **~25 MB RAM** (reduced from 118 MB!).
 - **Live Speed**: Real-time upload & download speed in **Mbps** (and **Kbps** when idle).
 - **12-Hour Clock**: Big, crisp digital time with live seconds, date, and **AM / PM**.
 - **World Clocks**: Instant time difference & live hour for global cities (Sydney, London, NY, Tokyo, etc.).
