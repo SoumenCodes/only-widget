@@ -7,15 +7,15 @@
 
 ## ⚡ Instant Download
 
-Click below to download the latest version for your computer:
+Click below to download for your computer:
 
 | Platform | Download Link | File Type |
 | :--- | :--- | :--- |
-| **Windows** | [⬇️ Download for Windows](https://github.com/SoumenCodes/only-widget/releases/latest/download/Only-Widget-Setup-1.0.0.exe) | `.exe` (Installer) |
-| **Windows (Portable)** | [⬇️ Download Portable](https://github.com/SoumenCodes/only-widget/releases/latest/download/Only-Widget-1.0.0.exe) | `.exe` (No install) |
-| **macOS** | [⬇️ Download for Mac](https://github.com/SoumenCodes/only-widget/releases/latest/download/Only-Widget-1.0.0.dmg) | `.dmg` (Universal) |
+| **Windows** | [⬇️ **Download for Windows**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only.Widget.Setup.1.0.0.exe) | `.exe` (Installer) |
+| **Windows (Portable)** | [⬇️ **Download Portable**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only.Widget.1.0.0.exe) | `.exe` (No install needed) |
+| **macOS (Apple Silicon M1/M2/M3/M4)** | [⬇️ **Download for Mac**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only-Widget-1.0.0-arm64.dmg) | `.dmg` (Disk Image) |
 
-*(Or browse all versions on the [Releases](https://github.com/SoumenCodes/only-widget/releases) page).*
+*(You can also view all released files directly on the [GitHub Releases](https://github.com/SoumenCodes/only-widget/releases/tag/v1.0.0) page).*
 
 ---
 
