@@ -9,6 +9,9 @@
     "dev": "concurrently -k \"vite\" \"electron . --dev\"",
     "build": "vite build",
     "start": "npm run build && electron .",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
     "dist": "npm run build && electron-builder",
     "dist:win": "npm run build && electron-builder --win",
     "dist:mac": "npm run build && electron-builder --mac"
@@ -51,6 +54,7 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "@tauri-apps/api": "^2.12.4",
     "clsx": "^2.1.1",
     "koffi": "^3.3.7",
     "lucide-react": "^1.70.0",
@@ -60,6 +64,7 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4",
     "@vitejs/plugin-react": "^6.2.1",
     "concurrently": "^10.0.6",
     "electron": "^45.2.3",

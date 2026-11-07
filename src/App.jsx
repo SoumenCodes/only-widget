@@ -41,17 +41,22 @@ export default function App() {
 
   // Dynamically size window based on modal state, compact mode, and active timezones
   useEffect(() => {
+    const targetHeight = isModalOpen
+      ? 580
+      : isCompact
+      ? 330
+      : timezones.length <= 1
+      ? 535
+      : timezones.length === 2
+      ? 615
+      : 695;
+
     if (window.electronAPI?.setWindowHeight) {
-      const targetHeight = isModalOpen
-        ? 580
-        : isCompact
-        ? 330
-        : timezones.length <= 1
-        ? 535
-        : timezones.length === 2
-        ? 615
-        : 695;
       window.electronAPI.setWindowHeight(targetHeight);
+    } else if (window.__TAURI_INTERNALS__) {
+      import('@tauri-apps/api/core').then(({ invoke }) => {
+        invoke('set_window_height', { height: targetHeight });
+      });
     }
   }, [isModalOpen, isCompact, timezones.length]);
 
@@ -60,6 +65,9 @@ export default function App() {
     setIsPinned(nextPin);
     if (window.electronAPI?.setAlwaysOnTop) {
       await window.electronAPI.setAlwaysOnTop(nextPin);
+    } else if (window.__TAURI_INTERNALS__) {
+      const { invoke } = await import('@tauri-apps/api/core');
+      invoke('set_always_on_top', { flag: nextPin });
     }
   };
 

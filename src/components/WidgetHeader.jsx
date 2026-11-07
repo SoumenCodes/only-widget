@@ -5,24 +5,33 @@ export default function WidgetHeader({ isPinned, onTogglePin, isCompact, onToggl
   const handleMinimize = () => {
     if (window.electronAPI?.minimizeWindow) {
       window.electronAPI.minimizeWindow();
+    } else if (window.__TAURI_INTERNALS__) {
+      import('@tauri-apps/api/core').then(({ invoke }) => invoke('minimize_window'));
     }
   };
 
   const handleClose = () => {
     if (window.electronAPI?.closeWindow) {
       window.electronAPI.closeWindow();
+    } else if (window.__TAURI_INTERNALS__) {
+      import('@tauri-apps/api/core').then(({ invoke }) => invoke('close_window'));
     }
   };
 
   const handleMouseUp = () => {
-    if (!isPinned && window.electronAPI?.sendToDesktop) {
-      window.electronAPI.sendToDesktop();
+    if (!isPinned) {
+      if (window.electronAPI?.sendToDesktop) {
+        window.electronAPI.sendToDesktop();
+      } else if (window.__TAURI_INTERNALS__) {
+        import('@tauri-apps/api/core').then(({ invoke }) => invoke('send_to_desktop'));
+      }
     }
   };
 
   return (
     <div
       className="drag-region"
+      data-tauri-drag-region
       onMouseUp={handleMouseUp}
       style={{
         display: 'flex',

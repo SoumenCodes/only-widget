@@ -1,26 +1,27 @@
 # Only Widget
 
 > **The only desktop widget you need.**  
-> Minimal, modular desktop widget displaying real-time network speed (Mbps/Kbps), 12-hour clock, and world time zones.
+> Ultra-lightweight desktop widget displaying real-time network speed (Mbps/Kbps), 12-hour clock, and world time zones. Built with **Tauri 2.0** (~5–8 MB download, ~25 MB RAM).
 
 ---
 
 ## ⚡ Instant Download
 
-Click below to download for your computer:
+Click below to download the lightweight installer for your computer:
 
-| Platform | Download Link | File Type |
-| :--- | :--- | :--- |
-| **Windows** | [⬇️ **Download for Windows**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only.Widget.Setup.1.0.0.exe) | `.exe` (Installer) |
-| **Windows (Portable)** | [⬇️ **Download Portable**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only.Widget.1.0.0.exe) | `.exe` (No install needed) |
-| **macOS (Apple Silicon M1/M2/M3/M4)** | [⬇️ **Download for Mac**](https://github.com/SoumenCodes/only-widget/releases/download/v1.0.0/Only-Widget-1.0.0-arm64.dmg) | `.dmg` (Disk Image) |
+| Platform | Download Link | Size | File Type |
+| :--- | :--- | :--- | :--- |
+| **Windows** | [⬇️ **Download for Windows**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~5 MB** | `.msi` / `.exe` |
+| **macOS (Apple Silicon M1/M2/M3/M4)** | [⬇️ **Download for Mac (Apple Silicon)**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~6 MB** | `.dmg` |
+| **macOS (Intel Core)** | [⬇️ **Download for Mac (Intel)**](https://github.com/SoumenCodes/only-widget/releases/latest) | **~6 MB** | `.dmg` |
 
-*(You can also view all released files directly on the [GitHub Releases](https://github.com/SoumenCodes/only-widget/releases/tag/v1.0.0) page).*
+*(Browse all assets and versions directly on the [Releases](https://github.com/SoumenCodes/only-widget/releases) page).*
 
 ---
 
 ## ✨ Features
 
+- **Ultralight Footprint**: **~5 MB download** and **~25 MB RAM** (vs 120 MB in standard apps).
 - **Live Speed**: Real-time upload & download speed in **Mbps** (and **Kbps** when idle).
 - **12-Hour Clock**: Big, crisp digital time with live seconds, date, and **AM / PM**.
 - **World Clocks**: Instant time difference & live hour for global cities (Sydney, London, NY, Tokyo, etc.).
@@ -35,7 +36,15 @@ Click below to download for your computer:
 git clone https://github.com/SoumenCodes/only-widget.git
 cd only-widget
 npm install
+
+# Run frontend in browser
 npm run dev
+
+# Run Tauri desktop app (requires Rust)
+npm run tauri:dev
+
+# Build standalone installer
+npm run tauri:build
 ```
 
 ---

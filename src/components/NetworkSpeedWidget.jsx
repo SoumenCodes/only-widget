@@ -6,10 +6,8 @@ function formatNetworkSpeed(bytesPerSec) {
     return { val: '0.0', unit: 'Kbps' };
   }
 
-  // Convert Bytes per second to Bits per second (1 Byte = 8 bits)
   const bitsPerSec = bytesPerSec * 8;
 
-  // When speed is under 1 Mbps (1,000,000 bps or 1024*1024), show in Kbps
   if (bitsPerSec < 1000 * 1000) {
     const kbps = bitsPerSec / 1000;
     return {
@@ -17,14 +15,12 @@ function formatNetworkSpeed(bytesPerSec) {
       unit: 'Kbps'
     };
   } else if (bitsPerSec < 1000 * 1000 * 1000) {
-    // 1 Mbps to 1000 Mbps
     const mbps = bitsPerSec / (1000 * 1000);
     return {
       val: mbps < 100 ? mbps.toFixed(1) : Math.round(mbps).toString(),
       unit: 'Mbps'
     };
   } else {
-    // 1 Gbps+
     const gbps = bitsPerSec / (1000 * 1000 * 1000);
     return {
       val: gbps.toFixed(2),
@@ -41,27 +37,45 @@ export default function NetworkSpeedWidget() {
   });
 
   useEffect(() => {
+    // 1. Electron bridge
     if (window.electronAPI?.onNetworkUpdate) {
       const cleanup = window.electronAPI.onNetworkUpdate((data) => {
         setNetData(data);
       });
       return cleanup;
-    } else {
-      const interval = setInterval(() => {
-        setNetData({
-          iface: 'Wi-Fi',
-          rx_sec: Math.random() * 1.8 * 1024 * 1024 + 120000,
-          tx_sec: Math.random() * 600 * 1024 + 35000
-        });
-      }, 1000);
-      return () => clearInterval(interval);
     }
+
+    // 2. Tauri event bridge
+    let unlistenTauri = null;
+    if (window.__TAURI_INTERNALS__) {
+      import('@tauri-apps/api/event').then(({ listen }) => {
+        listen('network-update', (event) => {
+          if (event.payload) {
+            setNetData(event.payload);
+          }
+        }).then((unlisten) => {
+          unlistenTauri = unlisten;
+        });
+      });
+      return () => {
+        if (unlistenTauri) unlistenTauri();
+      };
+    }
+
+    // 3. Fallback for browser testing
+    const interval = setInterval(() => {
+      setNetData({
+        iface: 'Wi-Fi',
+        rx_sec: Math.random() * 1.8 * 1024 * 1024 + 120000,
+        tx_sec: Math.random() * 600 * 1024 + 35000
+      });
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const downFormatted = formatNetworkSpeed(netData.rx_sec);
   const upFormatted = formatNetworkSpeed(netData.tx_sec);
 
-  // Scale progress bar based on bits per sec (up to 50 Mbps full scale)
   const downBits = (netData.rx_sec || 0) * 8;
   const upBits = (netData.tx_sec || 0) * 8;
   const downPercent = Math.min(100, Math.max(6, (downBits / (50 * 1000 * 1000)) * 100));
