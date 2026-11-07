@@ -4,6 +4,7 @@ import TimeZoneCard from './TimeZoneCard';
 
 export default function TimeZoneSection({
   timezones,
+  currentTime,
   onOpenModal,
   onDeleteTimeZone
 }) {
@@ -90,6 +91,7 @@ export default function TimeZoneSection({
             <TimeZoneCard
               key={zone.id}
               zone={zone}
+              currentTime={currentTime}
               onDelete={onDeleteTimeZone}
             />
           ))

@@ -37,20 +37,13 @@ function getRelativeOffset(targetTz) {
   }
 }
 
-export default function TimeZoneCard({ zone, onDelete }) {
-  const [currentTime, setCurrentTime] = React.useState(new Date());
-
-  React.useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
+export default function TimeZoneCard({ zone, currentTime, onDelete }) {
+  const now = currentTime || new Date();
   let formattedTime = '';
   let ampm = '';
   let hourNumber = 12;
 
   try {
-    // Strictly 12-hour format with AM/PM
     const options = {
       timeZone: zone.tz,
       hour: 'numeric',
@@ -59,9 +52,9 @@ export default function TimeZoneCard({ zone, onDelete }) {
     };
     
     const hourOpt = { timeZone: zone.tz, hour: 'numeric', hour12: false };
-    hourNumber = parseInt(new Intl.DateTimeFormat('en-US', hourOpt).format(currentTime), 10);
+    hourNumber = parseInt(new Intl.DateTimeFormat('en-US', hourOpt).format(now), 10);
 
-    const timeStr = new Intl.DateTimeFormat('en-US', options).format(currentTime);
+    const timeStr = new Intl.DateTimeFormat('en-US', options).format(now);
     const parts = timeStr.split(' ');
     formattedTime = parts[0];
     ampm = parts[1] || '';

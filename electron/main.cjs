@@ -1,10 +1,16 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
 const os = require('os');
-const si = require('systeminformation');
 const { setupDesktopPinning } = require('./desktopManager.cjs');
+const { getNetworkBytes } = require('./nativeNetwork.cjs');
 
-app.setPath('userData', path.join(os.tmpdir(), 'aura-widget-cache'));
+app.setPath('userData', path.join(os.tmpdir(), 'only-widget-cache'));
+
+// Hardware performance flags to drop CPU & RAM
+app.commandLine.appendSwitch('disable-background-timer-throttling');
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
+app.commandLine.appendSwitch('disable-gpu-process-crash-limit');
+app.commandLine.appendSwitch('disable-software-rasterizer');
 
 let mainWindow = null;
 let networkInterval = null;
@@ -16,7 +22,7 @@ function createWindow() {
 
   mainWindow = new BrowserWindow({
     width: 385,
-    height: 695,
+    height: 535,
     x: Math.max(20, screenWidth - 415),
     y: 40,
     frame: false,
@@ -29,7 +35,9 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      backgroundThrottling: false,
+      spellcheck: false
     }
   });
 
@@ -53,68 +61,40 @@ function createWindow() {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
-  // Real-time network speed monitor using precise millisecond deltas
-  let prevRx = null;
-  let prevTx = null;
-  let prevTimestamp = null;
+  // Ultra-fast 0% CPU native network speed monitor
+  let initial = getNetworkBytes();
+  let prevRx = initial.rx;
+  let prevTx = initial.tx;
+  let prevTimestamp = Date.now();
 
-  si.networkStats('*').then(initialStats => {
-    let initialRx = 0;
-    let initialTx = 0;
-    for (const s of initialStats) {
-      if (s.operstate === 'up' || s.rx_bytes > 0 || s.tx_bytes > 0) {
-        initialRx += (s.rx_bytes || 0);
-        initialTx += (s.tx_bytes || 0);
-      }
-    }
-    prevRx = initialRx;
-    prevTx = initialTx;
-    prevTimestamp = Date.now();
+  networkInterval = setInterval(() => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
 
-    networkInterval = setInterval(async () => {
-      if (!mainWindow || mainWindow.isDestroyed()) return;
+    try {
+      const stats = getNetworkBytes();
+      const now = Date.now();
+      const deltaSec = (now - prevTimestamp) / 1000;
 
-      try {
-        const allStats = await si.networkStats('*');
-        const now = Date.now();
-        let totalRx = 0;
-        let totalTx = 0;
-        let primaryInterface = 'Wi-Fi';
+      if (deltaSec > 0.4) {
+        const rx_sec = Math.max(0, (stats.rx - prevRx) / deltaSec);
+        const tx_sec = Math.max(0, (stats.tx - prevTx) / deltaSec);
 
-        for (const s of allStats) {
-          if (s.operstate === 'up' || s.rx_bytes > 0 || s.tx_bytes > 0) {
-            totalRx += (s.rx_bytes || 0);
-            totalTx += (s.tx_bytes || 0);
-            if (s.operstate === 'up') {
-              primaryInterface = s.iface || primaryInterface;
-            }
-          }
-        }
+        mainWindow.webContents.send('network-update', {
+          iface: stats.iface || 'Wi-Fi',
+          rx_sec: Math.round(rx_sec),
+          tx_sec: Math.round(tx_sec),
+          rx_bytes: stats.rx,
+          tx_bytes: stats.tx
+        });
 
-        if (prevTimestamp !== null) {
-          const deltaSec = (now - prevTimestamp) / 1000;
-          if (deltaSec > 0.4) {
-            const rx_sec = Math.max(0, (totalRx - prevRx) / deltaSec);
-            const tx_sec = Math.max(0, (totalTx - prevTx) / deltaSec);
-
-            mainWindow.webContents.send('network-update', {
-              iface: primaryInterface,
-              rx_sec: Math.round(rx_sec),
-              tx_sec: Math.round(tx_sec),
-              rx_bytes: totalRx,
-              tx_bytes: totalTx
-            });
-          }
-        }
-
-        prevRx = totalRx;
-        prevTx = totalTx;
+        prevRx = stats.rx;
+        prevTx = stats.tx;
         prevTimestamp = now;
-      } catch (err) {
-        console.error('Error querying real network stats:', err);
       }
-    }, 1000);
-  });
+    } catch (err) {
+      // Quiet error handle
+    }
+  }, 1000);
 
   mainWindow.on('closed', () => {
     if (networkInterval) clearInterval(networkInterval);

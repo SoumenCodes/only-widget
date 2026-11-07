@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Calendar, Sun, Moon, MapPin } from 'lucide-react';
 
 function getRealTimezoneInfo() {
@@ -23,20 +23,13 @@ function getRealTimezoneInfo() {
   }
 }
 
-export default function ClockWidget() {
-  const [time, setTime] = useState(new Date());
-  const [realTz] = useState(getRealTimezoneInfo);
+export default function ClockWidget({ time }) {
+  const [realTz] = React.useState(getRealTimezoneInfo);
+  const now = time || new Date();
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const rawHours = time.getHours();
-  const minutes = String(time.getMinutes()).padStart(2, '0');
-  const seconds = String(time.getSeconds()).padStart(2, '0');
+  const rawHours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
   const isDay = rawHours >= 6 && rawHours < 18;
 
   // 12-hour format with AM/PM
@@ -44,8 +37,8 @@ export default function ClockWidget() {
   const displayHours = rawHours % 12 || 12;
   const formattedHours = String(displayHours).padStart(2, '0');
 
-  const weekdayName = time.toLocaleDateString(undefined, { weekday: 'long' });
-  const fullDateStr = time.toLocaleDateString(undefined, {
+  const weekdayName = now.toLocaleDateString(undefined, { weekday: 'long' });
+  const fullDateStr = now.toLocaleDateString(undefined, {
     month: 'short',
     day: 'numeric',
     year: 'numeric'

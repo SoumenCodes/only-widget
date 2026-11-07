@@ -10,6 +10,14 @@ export default function App() {
   const [isPinned, setIsPinned] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Single global 1-second clock timer for all components
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const [timezones, setTimezones] = useState(() => {
     try {
@@ -111,15 +119,16 @@ export default function App() {
           gap: '10px'
         }}>
           {/* Main Clock (12-Hour Format) */}
-          <ClockWidget />
+          <ClockWidget time={currentTime} />
 
           {/* Real Network Speed Monitor */}
           <NetworkSpeedWidget />
 
-          {/* World Timezones (Only 1 by default: Sydney) */}
+          {/* World Timezones */}
           {!isCompact && (
             <TimeZoneSection
               timezones={timezones}
+              currentTime={currentTime}
               onOpenModal={() => setIsModalOpen(true)}
               onDeleteTimeZone={handleDeleteTimeZone}
             />
