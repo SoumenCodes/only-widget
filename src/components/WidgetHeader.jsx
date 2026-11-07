@@ -57,7 +57,7 @@ export default function WidgetHeader({ isPinned, onTogglePin, isCompact, onToggl
           color: 'var(--text-main)',
           opacity: 0.95
         }}>
-          Aura
+          Only Widget
         </span>
       </div>
 

@@ -1,58 +1,68 @@
-# Aura — Modern Glassmorphism Windows Widget
+# Only Widget 
 
-A sleek, lightweight desktop widget for Windows that displays real-time **Network Speed**, **Date & Time**, and customizable **Multiple Time Zones**.
+> **The only desktop widget you need.**  
+> Real-time network speed monitor (Mbps/Kbps), 12-hour hero clock, and world time zones in one modular, glassmorphic desktop widget for **Windows** & **macOS**.
 
 ---
 
 ## ✨ Features
 
-- **Hero Glowing Clock & Calendar**:
-  - Crisp glowing digital clock with live seconds.
-  - Formatted day of the week, month, day, and year.
-  - Click anywhere on the clock to toggle between **12-Hour (AM/PM)** and **24-Hour** formats.
-  - Dynamic Sun (☀️) and Moon (🌙) icon based on day/night status.
+- **Real-Time Live Network Speed**:
+  - Live hardware monitoring for active Wi-Fi and Ethernet adapters.
+  - Formatted in **Mbps** (fast) and **Kbps** (idle/low traffic).
+  - Dynamic animated speed bars that pulse with real upload and download throughput.
 
-- **Real-Time Network Speed Monitor**:
-  - Live **Download (↓)** speed with glowing cyan activity pill.
-  - Live **Upload (↑)** speed with glowing violet activity pill.
-  - Auto-scaling units (`B/s`, `KB/s`, `MB/s`, `GB/s`).
-  - Animated activity pulse bars that expand with network traffic.
-  - Detects active network interface (Wi-Fi / Ethernet).
+- **12-Hour Hero Digital Clock & Date**:
+  - Big bold digital numbers with live seconds and clear **AM / PM** tags.
+  - Prominent day of the week and full date (e.g. `FRIDAY • Nov 6, 2026`).
+  - Real local time zone auto-detection (`Calcutta (GMT+5:30)`).
+  - Dynamic **☀️ DAY** / **🌙 NIGHT** indicator.
 
-- **Multi-Timezone World Clock**:
-  - Add as many custom world time zones as you need.
-  - Instant city/timezone search modal (New York, London, Tokyo, Paris, Sydney, Dubai, UTC, Singapore, etc.).
-  - Shows real-time hour/minute for each timezone.
-  - Displays relative time difference (e.g., `+5h 30m`, `-4h`, `Same time`).
-  - Hover to remove or manage your timezones.
-  - Automatically saves your saved zones and settings.
+- **World Time Zones**:
+  - Track global cities side-by-side with your local time.
+  - Dedicated Australian time zones (Sydney, Melbourne, Brisbane, Perth, Adelaide, Darwin, Hobart).
+  - Live 12-hour time and relative time offset (`+5h 30m`, `-10h 30m`).
+  - Search modal with instant filtering.
 
-- **Desktop Widget Controls**:
-  - **Draggable**: Grab the top header to move the widget anywhere across your screens.
-  - 📌 **Always-on-Top Toggle**: Pin the widget above other windows or keep it resting on your desktop.
-  - ▾ **Compact Mode Toggle**: Shrink the widget down to a slim mini-dock when you only need the clock and network speed.
-  - **Frosted Glass Design**: Obsidian translucent glass with backdrop blur and neon accents.
+- **True Desktop Integration**:
+  - **Windows**: Pinned behind open folders and applications (`HWND_BOTTOM`), hidden from the taskbar and Alt+Tab.
+  - **macOS**: Pinned to the desktop workspace level and hidden from the Mac Dock.
+  - Modular floating solid cards on top of wallpaper.
+  - Draggable anywhere, with optional **Always on Top (📌)** and **Compact View (▾)**.
 
 ---
 
-## 🚀 How to Run
+## 📦 Download & Install
 
-### Development Mode (with Live Hot-Reloading)
+Download the installer for your operating system from the [Releases](https://github.com/YOUR_USERNAME/only-widget/releases) page:
+
+- **Windows**: Download `Only-Widget-Setup-1.0.0.exe` (or `Only-Widget-1.0.0-portable.exe`)
+- **macOS**: Download `Only-Widget-1.0.0.dmg`
+
+---
+
+## 🛠️ Local Development
+
 ```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/only-widget.git
+cd only-widget
+
+# Install dependencies
+npm install
+
+# Run in development mode
 npm run dev
-```
 
-### Production / Desktop Mode
-```bash
+# Run as desktop widget
 npm start
+
+# Build production installers
+npm run dist:win   # Build Windows .exe
+npm run dist:mac   # Build macOS .dmg
 ```
-*(This builds the optimized bundle and launches the standalone frameless desktop widget).*
 
 ---
 
-## 🛠️ Tech Stack
-- **Desktop Runtime**: Electron 45 (frameless, transparent window)
-- **Frontend**: React 19 + Vite 8
-- **OS Telemetry**: `systeminformation` (live network delta calculation)
-- **Icons**: Lucide React
-- **Design**: Frosted Obsidian Glassmorphism CSS with JetBrains Mono & Plus Jakarta Sans typography
+## 📄 License
+MIT

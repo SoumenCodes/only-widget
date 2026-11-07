@@ -1,7 +1,7 @@
 {
-  "name": "aura-widget",
+  "name": "only-widget",
   "version": "1.0.0",
-  "description": "Aura - Modern Desktop Clock & Live Network Speed Widget for Windows & macOS",
+  "description": "Only Widget — The only desktop widget you need. Real-time network speed (Mbps/Kbps), 12-hour clock, and world time zones for Windows & macOS.",
   "main": "electron/main.cjs",
   "scripts": {
     "dev:vite": "vite",
@@ -14,8 +14,8 @@
     "dist:mac": "npm run build && electron-builder --mac"
   },
   "build": {
-    "appId": "com.aura.widget",
-    "productName": "Aura Widget",
+    "appId": "com.onlywidget.app",
+    "productName": "Only Widget",
     "directories": {
       "output": "release"
     },
