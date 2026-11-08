@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Only Widget - LinkedIn Showcase Banner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #080b11;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #ffffff;
+      padding: 20px;
+    }
+    .banner-container {
+      width: 1200px;
+      height: 628px;
+      position: relative;
+      background: radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.18) 0%, transparent 45%),
+                  radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.18) 0%, transparent 45%),
+                  linear-gradient(135deg, #0d121f 0%, #080b12 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+    }
+    /* Grid background pattern */
+    .banner-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    /* Left column: Value proposition */
+    .left-side {
+      flex: 1.25;
+      padding: 55px 45px 55px 65px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 2;
+    }
+    .tagline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .headline {
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-top: 15px;
+      background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .headline span {
+      background: linear-gradient(90deg, #38bdf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtext {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #94a3b8;
+      margin-top: 15px;
+      max-width: 500px;
+    }
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+    .highlight-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .highlight-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .highlight-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+    .highlight-desc {
+      font-size: 11px;
+      color: #64748b;
+    }
+    .platforms-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 25px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .os-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #151b28;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .size-tag {
+      font-size: 12px;
+      color: #10b981;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    /* Right column: Pixel-perfect Widget Replica */
+    .right-side {
+      flex: 1;
+      padding: 40px 60px 40px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    .widget-mockup {
+      width: 380px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transform: scale(0.95);
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+    }
+    .mock-header {
+      background: #151b2b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mock-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .mock-logo-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #06b6d4, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+    .mock-controls {
+      display: flex;
+      gap: 5px;
+    }
+    .mock-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #192033;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #94a3b8;
+    }
+    .mock-card {
+      background: #151b2b;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .mock-clock-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .mock-day {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .mock-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .mock-tag {
+      background: #1c2438;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mock-time {
+      font-size: 50px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #ffffff;
+      margin: 4px 0 8px 0;
+      display: flex;
+      align-items: baseline;
+    }
+    .mock-seconds {
+      font-size: 20px;
+      color: #06b6d4;
+      margin-left: 3px;
+    }
+    .mock-ampm {
+      font-size: 12px;
+      font-weight: 800;
+      color: #06b6d4;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-left: 8px;
+    }
+    .mock-tz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #0d273a;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      padding: 4px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .mock-net-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .mock-net-pill {
+      padding: 8px 10px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .mock-down {
+      background: #0d273a;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+    }
+    .mock-up {
+      background: #23163a;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+    .mock-bar {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .mock-fill-down {
+      width: 65%;
+      height: 100%;
+      background: linear-gradient(90deg, #06b6d4, #38bdf8);
+    }
+    .mock-fill-up {
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, #a855f7, #d946ef);
+    }
+    .mock-world-row {
+      background: #151b2b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LINKEDIN BANNER CANVAS (1200x628) -->
+  <div class="banner-container">
+    
+    <!-- LEFT COLUMN: Pitch & Engineering Value -->
+    <div class="left-side">
+      <div>
+        <div class="tagline-pill">
+          <span>⚡</span> Cross-Platform Systems Engineering
+        </div>
+        <h1 class="headline">
+          Only Widget<br>
+          <span>Windows & macOS</span>
+        </h1>
+        <p class="subtext">
+          A high-performance desktop widget engineered with <strong>Tauri 2.0 & Rust</strong>. Live hardware bandwidth telemetry, dynamic 12-hour world clocks, and true desktop-level OS pinning.
+        </p>
+
+        <div class="highlights-grid">
+          <div class="highlight-item">
+            <div class="highlight-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">📊</div>
+            <div>
+              <div class="highlight-title">Live Speed (Mbps/Kbps)</div>
+              <div class="highlight-desc">Native C++ kernel polling (< 0.1% CPU)</div>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">🕒</div>
+            <div>
+              <div class="highlight-title">12-Hr World Clocks</div>
+              <div class="highlight-desc">Dynamic IANA time zone engine</div>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🪟</div>
+            <div>
+              <div class="highlight-title">Desktop-Layer Pinning</div>
+              <div class="highlight-desc">Win32 HWND_BOTTOM & Mac Dock-less</div>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24;">⚡</div>
+            <div>
+              <div class="highlight-title">Ultralight Architecture</div>
+              <div class="highlight-desc">~1.9 MB installer • ~25 MB RAM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATFORMS & GITHUB FOOTER -->
+      <div class="platforms-footer">
+        <div class="os-badge">
+          <span>🪟</span> Windows (.exe / .msi)
+        </div>
+        <div class="os-badge">
+          <span>🍏</span> macOS (.dmg)
+        </div>
+        <div class="size-tag">
+          1.9 MB Installer
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Exact Widget Replica Mockup -->
+    <div class="right-side">
+      <div class="widget-mockup">
+        
+        <!-- Header Pill -->
+        <div class="mock-header">
+          <div class="mock-logo">
+            <div class="mock-logo-box">⚡</div>
+            Only Widget
+          </div>
+          <div class="mock-controls">
+            <div class="mock-dot">📌</div>
+            <div class="mock-dot">▾</div>
+            <div class="mock-dot">−</div>
+            <div class="mock-dot">✕</div>
+          </div>
+        </div>
+
+        <!-- Clock Card -->
+        <div class="mock-card">
+          <div class="mock-clock-row">
+            <div>
+              <div class="mock-day">FRIDAY</div>
+              <div class="mock-date">📅 Nov 8, 2026</div>
+            </div>
+            <div class="mock-tag">☀️ DAY</div>
+          </div>
+          <div class="mock-time mono">
+            02:45<span class="mock-seconds">:18</span>
+            <span class="mock-ampm">PM</span>
+          </div>
+          <div class="mock-tz-badge">
+            📍 Calcutta <span style="color: #06b6d4; font-size: 10px;">(GMT+5:30)</span>
+          </div>
+        </div>
+
+        <!-- Network Card -->
+        <div class="mock-card" style="padding: 12px 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div style="color: #94a3b8; font-weight: 700;">📶 WI-FI</div>
+            <div style="color: #10b981; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span> LIVE
+            </div>
+          </div>
+          <div class="mock-net-grid">
+            <div class="mock-net-pill mock-down">
+              <span style="font-size: 9px; font-weight: 700; color: #06b6d4;">↓ DOWNLOAD</span>
+              <div class="mono" style="font-size: 16px; font-weight: 800; color: #ffffff; margin-top: 3px;">
+                42.8 <span style="font-size: 10px; color: #06b6d4;">Mbps</span>
+              </div>
+              <div class="mock-bar"><div class="mock-fill-down"></div></div>
+            </div>
+            <div class="mock-net-pill mock-up">
+              <span style="font-size: 9px; font-weight: 700; color: #c084fc;">↑ UPLOAD</span>
+              <div class="mono" style="font-size: 16px; font-weight: 800; color: #ffffff; margin-top: 3px;">
+                14.2 <span style="font-size: 10px; color: #c084fc;">Mbps</span>
+              </div>
+              <div class="mock-bar"><div class="mock-fill-up"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- World Time Card -->
+        <div class="mock-world-row">
+          <div>
+            <div style="font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+              Sydney <span>☀️</span>
+            </div>
+            <div style="font-size: 10px; color: #64748b; margin-top: 2px;">
+              Australia <span style="color: #06b6d4; background: #1e263a; padding: 1px 4px; border-radius: 4px;">+5h 30m</span>
+            </div>
+          </div>
+          <div class="mono" style="font-size: 16px; font-weight: 800;">
+            08:15 <span style="font-size: 10px; color: #06b6d4;">PM</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
